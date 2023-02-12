@@ -1,7 +1,9 @@
 # JiYuAi a small UI kit for DOjS
 A small UI kit to create simple UI apps
 
-Look in minimal.js for basic usage
+![Screenshot](./images/screen1.png)
+
+Look in minimal.js for minimal usage
 
 ## How to setup?
 Just download version 1.10 of DOjS from https://github.com/SuperIlu/DOjS/releases/tag/v1.100
