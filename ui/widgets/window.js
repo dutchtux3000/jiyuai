@@ -22,8 +22,9 @@ function UIWindow(id, title) {
   this.showTitlebar = true;
   this.destroyOnClose = false;
   this.onlyWhenInFocus = true;
-
+  
   // private props
+  this.hasOwnDrawBuffer = true;
   this._isCloseDown = false;
   this._titlebarFont = 'pc8x8'
   this._menuBarFont = 'pc8x8'

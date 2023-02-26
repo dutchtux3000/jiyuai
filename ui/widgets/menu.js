@@ -9,6 +9,7 @@ var MENUITEM_SELECTED_COLOR = Color(242, 140, 40, 255) //EGA.BLACK
  * @param {number} y 
  */
 function UIMenu(app, items, x, y) {
+  UIWidget.call(this);
   this.x = x
   this.y = y
   this.w = 16
@@ -77,12 +78,13 @@ UIMenu.prototype.draw = function () {
     this.calculateSize();
   }
   var font = this.app.getFont(this.fontName);
-  var relRect = this.getRelativeRect(this.x, this.y, this.w, this.h);
+  //var relRect = this.getRelativeRect(this.x, this.y, this.w, this.h);
+  var rect = this.getDrawRect(this.x, this.y, this.w, this.h);
 
-  FilledBox(relRect.x, relRect.y, relRect.w, relRect.h, EGA.WHITE);
-  Box(relRect.x, relRect.y, relRect.w, relRect.h, EGA.BLACK);
-  Line(relRect.x + 2, relRect.h + 1, relRect.w + 1, relRect.h + 1, EGA.DARK_GREY)
-  Line(relRect.w + 1, relRect.y + 3, relRect.w + 1, relRect.h, EGA.DARK_GREY)
+  FilledBox(rect.x, rect.y, rect.w, rect.h, EGA.WHITE);
+  Box(rect.x, rect.y, rect.w, rect.h, EGA.BLACK);
+  Line(rect.x + 2, rect.h + 1, rect.w + 1, rect.h + 1, EGA.DARK_GREY)
+  Line(rect.w + 1, rect.y + 3, rect.w + 1, rect.h, EGA.DARK_GREY)
 
   menuOffsetY = this.y
   menuOffsetX = this.x

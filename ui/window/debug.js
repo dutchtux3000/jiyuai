@@ -17,9 +17,7 @@ DebugWindow.constructor = DebugWindow;
  * Init
  */
 DebugWindow.prototype.init = function() {
-  this.addChildren(new UIText(10, 30, 'Value watcher'))  
-  this.watchValueHolder = new UIWidget();
-  this.watchValueHolder.setPosition(10, 40);
+  this.watchValueHolder = new UIGroup('Value watcher', 10, 30, this.w - 20, this.h - 40);
   this.addChildren(this.watchValueHolder);
   this._updateWatchValueUI();
 }
@@ -29,9 +27,9 @@ DebugWindow.prototype.init = function() {
  */
 DebugWindow.prototype._updateWatchValueUI = function() {
   this.watchValueHolder.clearChildren();
-  var offsetY = 0
+  var offsetY = 14
   this.watchValues.forEach(function (item) {
-    this.watchValueHolder.addChildren(new UIText(0, offsetY, item.key + ' : ' + item.value));
+    this.watchValueHolder.addChildren(new UIText(4, offsetY, item.key + ' : ' + item.value));
     offsetY = offsetY + 10
   }.bind(this));  
 }

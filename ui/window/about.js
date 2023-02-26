@@ -33,8 +33,8 @@ AboutWindow.prototype.init = function() {
   this.addChildren(this.memoryRemainingLabel);
   this.addChildren(this.memoryAvailable);
 
-  var button = new UIButton((this.w / 2) - (70 /2), this.h - 28, 'Close');
-  button.setSize(75, 20);
+  var button = new UIButton((this.w / 2) - (70 /2), this.h - 32, 'Close');
+  button.setSize(75, 24);
   button.hasFocus = true;
   button.onClick = function () {
     this.close();

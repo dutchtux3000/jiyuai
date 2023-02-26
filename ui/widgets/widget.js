@@ -16,6 +16,7 @@ function UIWidget() {
   this._canHaveFocus = false;
   this._calculatedRelativePosition = { x: this.x, y: this.y };
   this._needsDraw = false;
+  this.hasOwnDrawBuffer = false;
 }
 
 /**
@@ -121,7 +122,7 @@ UIWidget.prototype.getRelativeRect = function(x, y, w, h) {
  * @returns {x: number, y: number}
  */
 UIWidget.prototype.getDrawPosition = function(x, y) {
-  if ((this.parent === undefined) || (this.parent instanceof UIWindow)) {
+  if ((this.parent === undefined) || (this.parent.hasOwnDrawBuffer)) {
     return { x: x, y: y}    
   }
 
@@ -213,7 +214,9 @@ UIWidget.prototype._handleLoop = function(tick) {
   }
 
   this.children.forEach(function (child) {
+    if (child._handleLoop) {
       child._handleLoop(tick);
+    }
   });
 }
 

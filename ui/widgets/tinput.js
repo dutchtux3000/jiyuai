@@ -16,7 +16,7 @@ function UITextInput(value, x, y, w, h) {
   UIWidget.call(this);
   this.value = value;
   this.setPosition(x, y)
-  this.setSize(w, h)
+  this.setSize(w ? w : 200, h ? h : 20)
   this._canHaveFocus = true
   this.hasFocus = false
   this.textPaddingX = 5
@@ -34,7 +34,7 @@ UITextInput.prototype.constructor = UITextInput;
 /**
  * Draw widget
  */
-UITextInput.prototype.draw = function() {
+UITextInput.prototype.draw = function () {
   var rect = this.getDrawRect(this.x, this.y, this.w, this.h)
   var font = this.app.getFont(this.fontName);
   var TextPosY = rect.y + 6
@@ -52,17 +52,17 @@ UITextInput.prototype.draw = function() {
   if (renderValue.length > maxCharsInput) {
     renderValue = renderValue.slice(this._textOffsetRender, this._textOffsetRender + maxCharsInput);
   }
-  
+
   // render text
   font.DrawStringLeft(rect.x + this.textPaddingX, TextPosY, renderValue, EGA.BLACK, NO_COLOR);
 
-  
+
   if (this.hasFocus) {
     var carrotColor = EGA.DARK_GREY
 
     // focus shadow
     Line(rect.x + 1, rect.h + 1, rect.w + 1, rect.h + 1, EGA.DARK_GREY)
-    Line(rect.w + 1, rect.y + 1, rect.w + 1, rect.h, EGA.DARK_GREY)  
+    Line(rect.w + 1, rect.y + 1, rect.w + 1, rect.h, EGA.DARK_GREY)
 
     // set carrot position
     var carrotPositionX = this.textPaddingX + this._carrotPosition * 8;
@@ -73,7 +73,7 @@ UITextInput.prototype.draw = function() {
 
     Line(rect.x + carrotPositionX - 2, TextPosY - 3, rect.x + carrotPositionX - 1, TextPosY - 2, carrotColor);
     Line(rect.x + carrotPositionX + 2, TextPosY - 3, rect.x + carrotPositionX + 1, TextPosY - 2, carrotColor);
-    
+
     Line(rect.x + carrotPositionX - 2, TextPosY + 10, rect.x + carrotPositionX - 1, TextPosY + 9, carrotColor);
     Line(rect.x + carrotPositionX + 2, TextPosY + 10, rect.x + carrotPositionX + 1, TextPosY + 9, carrotColor);
   }
@@ -87,8 +87,8 @@ UITextInput.prototype.draw = function() {
  * @param {number} mouseY 
  * @param {bool} isLeftClicked 
  */
-UITextInput.prototype._handleMouseInput = function(mouseButtons, mouseX, mouseY, isLeftClicked) {
-  if (mouseButtons === 1 &&  this.hasFocus === false) {
+UITextInput.prototype._handleMouseInput = function (mouseButtons, mouseX, mouseY, isLeftClicked) {
+  if (mouseButtons === 1 && this.hasFocus === false) {
     if (this.parent && this.parent._clearFocusFromWidgets) {
       this.parent._clearFocusFromWidgets();
     }
@@ -116,7 +116,7 @@ UITextInput.prototype._handleMouseInput = function(mouseButtons, mouseX, mouseY,
  * @param {*} keyCode 
  * @param {*} char 
  */
-UITextInput.prototype._handleInput = function(key, keyCode, char) {
+UITextInput.prototype._handleInput = function (key, keyCode, char) {
   switch (keyCode) {
     case KEY.Code.KEY_END:
       this.setCarrotPosition(this.value.length);
@@ -124,9 +124,11 @@ UITextInput.prototype._handleInput = function(key, keyCode, char) {
     case KEY.Code.KEY_HOME:
       this.setCarrotPosition(0);
       break;
+    case KEY.Code.KEY_DOWN:
     case KEY.Code.KEY_LEFT:
       this.setCarrotPosition(this._carrotPosition - 1);
-      break;  
+      break;
+    case KEY.Code.KEY_UP:
     case KEY.Code.KEY_RIGHT:
       this.setCarrotPosition(this._carrotPosition + 1);
       break;
@@ -135,10 +137,10 @@ UITextInput.prototype._handleInput = function(key, keyCode, char) {
       break;
     case KEY.Code.KEY_DEL:
       this._removeCharsFromValue(this._carrotPosition)
-      break;  
+      break;
     case KEY.Code.KEY_TAB: // Ignore TAB for now
     case KEY.Code.KEY_ENTER: // Ignore TAB for now
-      break;    
+      break;
     default:
       if (key >= CharCode(" ")) {
         this._addCharAtCarrotPosition(char);
@@ -154,7 +156,7 @@ UITextInput.prototype._handleInput = function(key, keyCode, char) {
  * 
  * @param {string} value 
  */
-UITextInput.prototype.setValue = function(value) {
+UITextInput.prototype.setValue = function (value) {
   this.value = value;
   this._recalcTextOffset();
 
@@ -166,7 +168,7 @@ UITextInput.prototype.setValue = function(value) {
  * 
  * @param {number} position 
  */
-UITextInput.prototype.setCarrotPosition = function(position) {
+UITextInput.prototype.setCarrotPosition = function (position) {
   var newPosition = position;
 
   if (newPosition > this.value.length) {
@@ -187,10 +189,10 @@ UITextInput.prototype.setCarrotPosition = function(position) {
  * 
  * @param {string} char 
  */
-UITextInput.prototype._addCharAtCarrotPosition = function(char) {
+UITextInput.prototype._addCharAtCarrotPosition = function (char) {
   var oldValue = this.value;
   var newValue = oldValue.substring(0, this._carrotPosition) + char + oldValue.substring(this._carrotPosition);
-  
+
   this.setValue(newValue);
   this.setCarrotPosition(this._carrotPosition + 1);
 }
@@ -200,7 +202,7 @@ UITextInput.prototype._addCharAtCarrotPosition = function(char) {
  * 
  * @param {number} position 
  */
-UITextInput.prototype._removeCharsFromValue = function(position) {
+UITextInput.prototype._removeCharsFromValue = function (position) {
   if ((position > this.value.length) || (position <= -1)) {
     return;
   }
@@ -214,7 +216,7 @@ UITextInput.prototype._removeCharsFromValue = function(position) {
  * 
  * @returns 
  */
-UITextInput.prototype._recalcTextOffset = function() {
+UITextInput.prototype._recalcTextOffset = function () {
   this._textOffsetRender = 0
   if (!this.app) {
     return;
@@ -230,7 +232,7 @@ UITextInput.prototype._recalcTextOffset = function() {
 
   if (this._textOffsetRender < 0) {
     this._textOffsetRender = 0;
-  } 
+  }
 
   if (this._textOffsetRender > maxOffset) {
     this._textOffsetRender = maxOffset;

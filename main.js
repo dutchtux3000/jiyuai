@@ -3,6 +3,8 @@ Include('./ui/uiapp.js');
 Include('./demos/dlgdemo.js');
 Include('./demos/scrdemo.js');
 Include('./demos/ascdemo.js');
+Include('./demos/wdgdemo.js');
+
 
 function Setup() {  
   inputStr = ''
@@ -25,17 +27,29 @@ function Setup() {
    */
   var demoExamples = [
     {
-      label: 'Text input example',
+      label: 'Component/widget showcase',
       keyCode: 7170,
       keyLabel: 'Ctrl+1',
       onClick: function() {
-        app.showWindow('window2')
+        if (app.doesWindowExistsById('widgetsDemo')) {
+          app.showWindow('widgetsDemo')
+        } else {
+          app.addWindow(new WidgetsDemo());
+        }
       }
     },
     {
-      label: 'Ascii table',
+      label: 'Text input example',
       keyCode: 7426,
       keyLabel: 'Ctrl+2',
+      onClick: function() {
+        app.showWindow('window2')
+      }
+    },    
+    {
+      label: 'Ascii table',
+      keyCode: 7682,
+      keyLabel: 'Ctrl+3',
       onClick: function() {
         if (app.doesWindowExistsById('ascciDemo')) {
           app.showWindow('ascciDemo')
@@ -46,8 +60,8 @@ function Setup() {
     },
     {
       label: 'Dialog demo',
-      keyCode: 7682,
-      keyLabel: 'Ctrl+3',
+      keyCode: 7938,
+      keyLabel: 'Ctrl+4',
       onClick: function() {
         if (app.doesWindowExistsById('dialogDemo')) {
           app.showWindow('dialogDemo')
@@ -58,8 +72,8 @@ function Setup() {
     },
     {
       label: 'Scrollbar demo',
-      keyCode: 7938,
-      keyLabel: 'Ctrl+4',
+      keyCode: 8194,
+      keyLabel: 'Ctrl+5',
       onClick: function() {
         if (app.doesWindowExistsById('scrollbarDemo')) {
           app.showWindow('scrollbarDemo')
@@ -93,9 +107,9 @@ function Setup() {
   var buttonOffsetY = 50;
   demoExamples.forEach(function (item) {
     button = new UIButton(10, buttonOffsetY, item.label);
-    button.setSize(230, 20);
+    button.setSize(230, 24);
     button.onClick = item.onClick
-    buttonOffsetY = buttonOffsetY + 30  
+    buttonOffsetY = buttonOffsetY + 34  
     window1.addChildren(button)
   })
 

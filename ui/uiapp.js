@@ -32,6 +32,9 @@ Include('./ui/widgets/text.js');
 Include('./ui/widgets/button.js');
 Include('./ui/widgets/tinput.js');
 Include('./ui/widgets/scrllbr.js');
+Include('./ui/widgets/group.js');
+Include('./ui/widgets/chckbx.js');
+Include('./ui/widgets/image.js');
 
 // window
 Include('./ui/widgets/dialog.js');

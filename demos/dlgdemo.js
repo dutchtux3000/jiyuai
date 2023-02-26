@@ -25,7 +25,7 @@ DialogDemo.prototype.init = function() {
   this.showAlertButton.onClick = this.showAlertDialog.bind(this);
   this.addChildren(this.showAlertButton)
 
-  this.showConfirmButton = new UIButton(120,  90, 'Show confirm');
+  this.showConfirmButton = new UIButton(140,  90, 'Show confirm');
   this.showConfirmButton.onClick = this.showConfirmDialog.bind(this);
   this.addChildren(this.showConfirmButton)  
 

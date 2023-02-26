@@ -82,6 +82,47 @@ function humanFileSize(bytes, siParam, dpParam) {
   return bytes.toFixed(dp) + ' ' + units[u];  
 }
 
+/**
+ * 
+ * @param {number} x1 
+ * @param {number} y1 
+ * @param {number} x2 
+ * @param {number} y2 
+ * @param {Color} c 
+ * @param {number} r 
+ */
+function BoxWithRadius(x1, y1, x2, y2, c, r) {
+
+  Line(x1 + r, y1, x2 - r, y1, c) // top
+  Line(x2, y1 + r, x2, y2 - r, c) // right
+  Line(x1 + r, y2, x2 - r, y2, c) // bottom  
+  Line(x1, y1 + r, x1, y2 - r, c) // left
+
+  // create corners
+  CircleArc(x1 + r, y1 + r, r, 64, 128, c) // top left
+  CircleArc(x2 - r, y1 + r, r, 0, 64, c) // top right
+  CircleArc(x2 - r, y2 - r, r, 192, 256, c) // bottom right
+  CircleArc(x1 + r, y2 - r, r, 128, 192, c) // bottom left
+}
+
+function FilledBoxWithRadius(x1, y1, x2, y2, c, r) {
+
+  // left right
+  FilledBox(x1, y1 + r, x2, y2 - r, c);
+
+  // top
+  FilledBox(x1 + r, y1, x2 - r, y1 + r, c);
+
+  // bottom
+  FilledBox(x1 + r, y2 - r, x2 - r, y2, c);
+  
+  // create corners
+  FilledCircle(x1 + r, y1 + r, r, c) // top left
+  FilledCircle(x2 - r, y1 + r, r, c) // top right
+  FilledCircle(x2 - r, y2 - r, r, c) // bottom right
+  FilledCircle(x1 + r, y2 - r, r, c) // bottom left
+}
+
 exports.__VERSION__ = 1;
 exports.Utils = {
   calcTextWidth: calcTextWidth,
@@ -89,4 +130,6 @@ exports.Utils = {
   hitTestRect: hitTestRect,
   createRectObj: createRectObj,
   humanFileSize: humanFileSize
-}
+};
+exports.BoxWithRadius = BoxWithRadius;
+exports.FilledBoxWithRadius = FilledBoxWithRadius;

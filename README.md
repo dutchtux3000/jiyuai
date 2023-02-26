@@ -32,3 +32,18 @@ jiuai.bat
 * [ ] Create textarea field
 * [ ] only update parts of the screen that are needed.
 * [ ] rename children to nodes (more in line with htmldom)
+* [ ] beter event handling for mouse (like mouseIn, mouseOut, mouseOver)
+* [ ] make a generic event handler system.
+
+## CHANGELOG
+
+### v0.0.2
+* Added checkbox widget
+* Added group widget
+* Added image widget
+* Give buttons rounded corners
+* Give buttons a pressed in state
+* Make window ascci table demo smaller
+
+### v0.0.1
+* First version
